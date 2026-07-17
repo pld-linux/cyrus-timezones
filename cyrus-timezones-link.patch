@@ -1,0 +1,19 @@
+--- cyrus-timezones-cyruslibs-fastmail-v86/guesstz/Makefile.am.orig	2026-07-17 18:09:22.645586090 +0200
++++ cyrus-timezones-cyruslibs-fastmail-v86/guesstz/Makefile.am	2026-07-17 18:45:34.497153494 +0200
+@@ -34,6 +34,7 @@ cyr_guesstz_LDFLAGS = \
+ 	-Wl,-rpath,$(RPATHS)
+ 
+ lib_LTLIBRARIES = libguesstz.la
++libguesstz_la_LIBADD = $(ICAL_LIBS) $(JANSSON_LIBS)
+ 
+ libguesstz_la_SOURCES = \
+ 	guesstz.c
+--- cyrus-timezones-cyruslibs-fastmail-v86/guesstz.pc.in.orig	2026-07-09 10:27:11.000000000 +0200
++++ cyrus-timezones-cyruslibs-fastmail-v86/guesstz.pc.in	2026-07-17 18:48:57.652719573 +0200
+@@ -7,5 +7,6 @@ datadir=@datadir@
+ Name: guesstz
+ Description: Guess IANA timezone names from VTIMEZONE
+ Version: @PACKAGE_VERSION@
++Requires.private: libical jansson
+ Libs: -L${libdir} -lguesstz
+ Cflags: -I${includedir}

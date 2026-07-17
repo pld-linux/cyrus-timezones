@@ -1,0 +1,11 @@
+--- cyrus-timezones-cyruslibs-fastmail-v86/guesstz/Makefile.am.orig	2026-07-09 10:27:11.000000000 +0200
++++ cyrus-timezones-cyruslibs-fastmail-v86/guesstz/Makefile.am	2026-07-17 17:09:18.294615951 +0200
+@@ -15,7 +15,7 @@ AM_CFLAGS = \
+ 	-Wno-parentheses \
+ 	-Wno-unused-function \
+ 	-fPIC \
+-	-Wall -Werror \
++	-Wall -Werror -Wno-error=format-truncation \
+ 	-fstack-protector-all \
+ 	-fno-semantic-interposition \
+ 	-Bsymbolic \
