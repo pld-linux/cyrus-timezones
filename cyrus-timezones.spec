@@ -8,13 +8,16 @@ Name:		cyrus-timezones
 Version:	1.0
 %define	gitref	cyruslibs-fastmail-v86
 %define	snap	20260610
-%define	rel	1
+%define	rel	2
+%define	tzver	2026f
 Release:	0.%{snap}.%{rel}
 License:	BSD (library), Public Domain (zoneinfo)
 Group:		Libraries
 #Source0Download: https://github.com/cyrusimap/cyrus-timezones/tags
 Source0:	https://github.com/cyrusimap/cyrus-timezones/archive/%{gitref}/%{name}-%{gitref}.tar.gz
 # Source0-md5:	366bbf62c24e93278fd6e5f8ad70fc02
+Source1:	https://data.iana.org/time-zones/releases/tzdata%{tzver}.tar.gz
+# Source1-md5:	573f4cf01bdcdbf0eda06876db101397
 Patch0:		%{name}-flags.patch
 Patch1:		%{name}-link.patch
 URL:		https://github.com/cyrusimap/cyrus-timezones
@@ -52,7 +55,7 @@ Summary:	Header files for guesstz library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki guesstz
 License:	BSD
 Group:		Development/Libraries
-Requires:	cyrus-guesstz = %{version}-%{release}
+Requires:	cyrus-guesstz%{?_isa} = %{version}-%{release}
 Requires:	jansson-devel
 Requires:	libical-devel >= 4
 
@@ -67,7 +70,7 @@ Summary:	Static guesstz library
 Summary(pl.UTF-8):	Statyczna biblioteka guesstz
 License:	BSD
 Group:		Development/Libraries
-Requires:	cyrus-guesstz-devel = %{version}-%{release}
+Requires:	cyrus-guesstz-devel%{?_isa} = %{version}-%{release}
 
 %description -n cyrus-guesstz-static
 Static guesstz library.
@@ -79,6 +82,11 @@ Statyczna biblioteka guesstz.
 %setup -q -n %{name}-%{gitref}
 %patch -P0 -p1
 %patch -P1 -p1
+
+# bundled tzdata stopped at 2026c (upstream unmaintained), use current IANA data
+%{__rm} -r tzdata
+install -d tzdata
+tar xzf %{SOURCE1} -C tzdata
 
 %build
 %{__libtoolize}
